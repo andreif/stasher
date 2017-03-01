@@ -28,7 +28,7 @@ stash push -h
 stash pull -h
 ```
 
-## Deploy server for stasher
+## Deploy stasher on Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/andreif/stasher)
 
@@ -42,4 +42,21 @@ The token can be changed with:
 
 ```sh
 heroku config:set STASH_TOKEN=***your-value***
+```
+
+### Manual deploy
+
+Install Heroku CLI, see https://devcenter.heroku.com/articles/heroku-cli
+
+```sh
+git clone git@github.com:andreif/stasher.git
+cd stasher
+
+heroku apps:create my-secret-stash
+heroku git:remote -a my-secret-stash
+heroku addons:create heroku-postgresql:hobby-dev
+heroku config:set STASH_TOKEN=***very-secret-token***
+
+git push heroku master
+heroku open
 ```
