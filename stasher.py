@@ -20,9 +20,8 @@ class ArgParser(argparse.ArgumentParser):
             __version__, super(ArgParser, self).format_help())
 
 parser = ArgParser(
-    description="Utility for stashing files on remote server.")
-parser.add_argument(
-    '-v', '--version', action='store_true', help="show version")
+    description="Utility for stashing files on remote server.",
+    version=__version__)
 parser.add_argument(
     '-d', '--debug', action='store_true', help="debug logging")
 parser.add_argument(
@@ -123,10 +122,6 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.DEBUG if args.debug else logging.INFO)
-
-    if args.version:
-        print(__version__)
-        exit()
 
     if args.url:
         stasher = Stasher(url=args.url, token=args.token)
