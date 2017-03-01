@@ -44,8 +44,10 @@ _example_pull = """
 
 parser = argparse.ArgumentParser(
     description="Utility for stashing files temporarily on remote server.",
-    version=__version__, formatter_class=argparse.RawTextHelpFormatter,
+    formatter_class=argparse.RawTextHelpFormatter,
     epilog=_example + _example_push + _example_pull + _example_args)
+parser.add_argument('-v', '--version', action='version',
+                    version='%(prog)s ' + __version__)
 parser.add_argument(
     '-d', '--debug', action='store_true', help="debug logging")
 parser.add_argument(
