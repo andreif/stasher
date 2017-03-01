@@ -1,0 +1,16 @@
+{
+  "name": "Stasher",
+  "description": "Server for stasher.",
+  "repository": "https://github.com/andreif/stasher",
+  "logo": "http://i.imgur.com/VWameni.png",
+  "keywords": [],
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ],
+  "env": {
+    "STASH_TOKEN": {
+      "description": "A secret token for request authorization.",
+      "generator": "secret"
+    }
+  }
+}
