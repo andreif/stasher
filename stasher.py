@@ -11,7 +11,7 @@ import time
 
 _log = logging.getLogger(__name__)
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 _example = """examples:
     $ export STASH_URL=https://my-secret-stash.herokuapp.com
