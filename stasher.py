@@ -13,15 +13,39 @@ _log = logging.getLogger(__name__)
 
 __version__ = '1.0.0'
 
+_example = """examples:
+    $ export STASH_URL=https://my-secret-stash.herokuapp.com
+    $ export STASH_TOKEN=secret
+    """
+_example_args = """
+    Provide URL and token via arg list:
+    $ stash -u https://my-stash.herokuapp.com -t secret pull my-box
+    """
+_example_push = """
+    Push files to the server (normally done from different machines):
+    $ stash push my-stash-box-name ./my-file-1.txt
+    $ stash push my-stash-box-name ./my-file-2.txt
 
-class ArgParser(argparse.ArgumentParser):
-    def format_help(self):
-        return "version: {}\n{}".format(
-            __version__, super(ArgParser, self).format_help())
+    Rename file on server as "my-file-2"
+    $ stash push my-stash-box-name ./my-file-2.txt my-file-2
+    """
+_example_pull = """
+    Pull your files from the server:
+    $ stash pull my-stash-box-name
 
-parser = ArgParser(
-    description="Utility for stashing files on remote server.",
-    version=__version__)
+    Note: files are normally kept for 60 minutes and then removed from server.
+
+    Validate that stash has 2 files before pulling:
+    $ stash pull my-stash-box-name -c 2
+
+    Wait until stash has 2 files (max 10 minutes):
+    $ stash pull my-stash-box-name -wc 2
+    """
+
+parser = argparse.ArgumentParser(
+    description="Utility for stashing files temporarily on remote server.",
+    version=__version__, formatter_class=argparse.RawTextHelpFormatter,
+    epilog=_example + _example_push + _example_pull + _example_args)
 parser.add_argument(
     '-d', '--debug', action='store_true', help="debug logging")
 parser.add_argument(
@@ -31,7 +55,9 @@ parser.add_argument(
     '-t', '--token', metavar="TOKEN", default=os.environ.get('STASH_TOKEN'),
     help="authorization token, default: env STASH_TOKEN")
 subparsers = parser.add_subparsers(title='command')
-subparser = subparsers.add_parser('push')
+subparser = subparsers.add_parser(
+    'push', formatter_class=argparse.RawTextHelpFormatter,
+    epilog=_example + _example_push)
 subparser.set_defaults(command='push')
 subparser.add_argument('box', metavar="BOX", help="name of stash box")
 subparser.add_argument(
@@ -40,7 +66,9 @@ subparser.add_argument(
 subparser.add_argument(
     'name', metavar="NAME", nargs='?',
     help="name of the file, default: file path's basename")
-subparser = subparsers.add_parser('pull')
+subparser = subparsers.add_parser(
+    'pull', formatter_class=argparse.RawTextHelpFormatter,
+    epilog=_example + _example_pull)
 subparser.set_defaults(command='pull')
 subparser.add_argument('box', metavar="BOX", help="name of stash box")
 subparser.add_argument(

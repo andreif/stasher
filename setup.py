@@ -8,7 +8,7 @@ version = stasher.__version__
 setup(
     name='stasher',
     version=version,
-    description='Helper tool to stash files on remote server',
+    description=stasher.parser.description,
     keywords=['stash', 'travis', 'coverage'],
     url=repo,
     download_url='%s/tarball/%s' % (repo, version),
