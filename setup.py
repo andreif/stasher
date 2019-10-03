@@ -17,7 +17,7 @@ setup(
     license='MIT',
     zip_safe=False,
     py_modules=['stasher'],
-    install_requires=['requests==2.13.0'],
+    install_requires=['requests==2.20.0'],
     entry_points={
         'console_scripts': [
             'stash = stasher:main',
